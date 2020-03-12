@@ -34,8 +34,8 @@ function generatePassword() {
   }
 
   // ask user which character types they want to
-  var useLowercase = confirm("Do you want to include lowercase letters?");
-  var useUppercase = confirm("Do you want to include uppercase letters?");
+  var useLowercase = confirm("Do you want to use lowercase letters?");
+  var useUppercase = confirm("Do you want to use uppercase letters?");
   var useSpecial = confirm("Do you want to use special characters?");
   var useNumeric = confirm("Do you want to use numbers?");
 
