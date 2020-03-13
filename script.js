@@ -16,8 +16,7 @@ function writePassword() {
 const lowerCase = "abcdefghijklmnopqrstuvwxyz";
 const upperCase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 const numeric = "0123456789";
-const specialCharacters = "!@#$%^&*()+=:;<>,.?";
-
+const specialCharacters = "!@#$%^&*()+=:;<>,.?/\\\'\"[]`_{}|~";
 
 // TODO: Write code so the generatePassword returns a string for a password
 // which meets the requirements in the instructions.
@@ -34,10 +33,10 @@ function generatePassword() {
   }
 
   // ask user which character types they want to
-  var useLowercase = confirm("Do you want to use lowercase letters?");
-  var useUppercase = confirm("Do you want to use uppercase letters?");
-  var useSpecial = confirm("Do you want to use special characters?");
-  var useNumeric = confirm("Do you want to use numbers?");
+  const useLowercase = confirm("Do you want to use lowercase letters?");
+  const useUppercase = confirm("Do you want to use uppercase letters?");
+  const useSpecial = confirm("Do you want to use special characters?");
+  const useNumeric = confirm("Do you want to use numbers?");
 
   // if user said no to every character type
   if (!useLowercase && !useUppercase && !useSpecial && !useNumeric) {
@@ -47,27 +46,33 @@ function generatePassword() {
   }
 
   // build a character set of character types the user wants
-  var availableCharacters = "";
+  var availableCharacterSets = [];
   if (useLowercase) {
-    availableCharacters += lowerCase;
+    availableCharacterSets.push(lowerCase);
   }
   if (useUppercase) {
-    availableCharacters += upperCase;
+    availableCharacterSets.push(upperCase);
   }
   if (useNumeric) {
-    availableCharacters += numeric;
+    availableCharacterSets.push(numeric);
   }
   if (useSpecial) {
-    availableCharacters += specialCharacters;
+    availableCharacterSets.push(specialCharacters);
   }
 
   var generatedPassword = "";
   // loop through the desired password length
   for (var i = 0; i < length; i++) {
-    // choose a random character out of the available characters
-    var randomChar = availableCharacters[Math.floor(Math.random() * availableCharacters.length)];
-    // concatenate the random character to the generated password
-    generatedPassword += randomChar;
+    // for the first few iterations, make sure every character set gets into the generated password at least once
+    // after first few iterations, choose character sets at random and choose random characters in those sets
+    if (i < availableCharacterSets.length) {
+      generatedPassword += availableCharacterSets[i][Math.floor(Math.random() * availableCharacterSets[i].length)];
+    } else {
+      // choose a random character set out of the available character sets
+      var randomCharSet = availableCharacterSets[Math.floor(Math.random() * availableCharacterSets.length)];
+      // concatenate a random character from the set to the generated password
+      generatedPassword += randomCharSet[Math.floor(Math.random() * randomCharSet.length)];
+    }
   }
 
   // return the generated password
